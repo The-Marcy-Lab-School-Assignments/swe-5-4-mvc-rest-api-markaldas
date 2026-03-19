@@ -4,6 +4,7 @@ const path = require('path');
 const app = express();
 const pathToFrontend = path.join(__dirname, '../frontend');
 
+
 ////////////////////////
 // Middleware
 ////////////////////////
@@ -24,27 +25,34 @@ app.use(express.json());
 
 
 // Increments and returns a unique id each time it is called.
-let id = 1;
-const getId = () => id++;
+// let id = 1;
+// const getId = () => id++;
 
 // Seed data — do not remove
-const todos = [
-  { id: getId(), task: 'Buy groceries', isDone: false },
-  { id: getId(), task: 'Walk the dog', isDone: true },
-  { id: getId(), task: 'Read a book', isDone: false },
-];
+// const todos = [
+//   { id: getId(), task: 'Buy groceries', isDone: false },
+//   { id: getId(), task: 'Walk the dog', isDone: true },
+//   { id: getId(), task: 'Read a book', isDone: false },
+// ];
 
 ////////////////////////
 // Endpoints
 ////////////////////////
+const todoControllers = require('../server/controllers/controllers.js')
 
 // TODO: GET /api/todos
 // Response: 200, array of all todos
+app.get('/api/todos', todoControllers.listTodos);
+app.get('/api/todos/:id', todoControllers.findTodo);
+app.post('/api/todos', todoControllers.createTodo);
+app.patch('/api/todos/:id', todoControllers.updateTodo);
+app.delete('/api/todos/:id', todoControllers.deleteTodo);
 
 
 // TODO: GET /api/todos/:id
 // Response: 200, single todo object
 // Error: 404 if no todo with that id
+
 
 
 // TODO: POST /api/todos
